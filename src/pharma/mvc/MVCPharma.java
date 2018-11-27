@@ -10,5 +10,5 @@ public class MVCPharma {
 		UserController theController = new UserController(theModel, theLogin);
 		theLogin.setLocationRelativeTo(null);
 		theLogin.setVisible(true);
-	}
+	} 
 }

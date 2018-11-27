@@ -11,7 +11,7 @@ public class HomeController {
 	private HomeView theHomeView;
 	
 	public HomeController() {
-		this.theHomeView = new HomeView("Home - Hiệu thuốc Hòa Linh");
+		this.theHomeView = new HomeView("Home - Nhà Thuốc Hòa Linh");
 		this.theHomeView.setLocationRelativeTo(null);
 		this.theHomeView.clickNhapHangListener(new NhapHangListener());
 		this.theHomeView.clickXuatHangListener(new XuatHangListener());
@@ -19,6 +19,7 @@ public class HomeController {
 		this.theHomeView.clickNhanVienListener(new NhanVienListener());
 		this.theHomeView.clickChiNhanhListener(new ChiNhanhListener());
 		this.theHomeView.clickThoatListener(new ThoatListener());
+		this.theHomeView.clickChatListener(new ChatListener());
 		this.theHomeView.setVisible(true);
 	}
 	
@@ -33,7 +34,6 @@ public class HomeController {
 	class XuatHangListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
 			
 		}
 	}
@@ -49,8 +49,8 @@ public class HomeController {
 	class NhanVienListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			UserController theUserController = new UserController();
+			theUserController.showWindowQuanLiDuocSi();
 		}
 	}
 	
@@ -68,6 +68,14 @@ public class HomeController {
 			int ret = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn thoát chương trình?", "Thoát", JOptionPane.YES_NO_OPTION);
             if(ret==JOptionPane.YES_OPTION)
                 System.exit(0);
+		}
+	}
+	
+	class ChatListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+			
 		}
 	}
 }

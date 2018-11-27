@@ -19,6 +19,7 @@ public class HomeView extends JFrame {
 
 	private JPanel contentPane;
 	private JButton btnNhapHang, btnXuatHang, btnKho, btnNhanVien, btnChiNhanh, btnThoat;
+	private JButton btnChat;
 
 	/**
 	 * Launch the application.
@@ -42,14 +43,14 @@ public class HomeView extends JFrame {
 	public HomeView(String title) {
 		setTitle(title);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 500, 400);
+		setBounds(100, 100, 500, 450);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.WHITE);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblPhnMmQun = new JLabel("PHẦN MÊM QUẢN LÍ HIỆU THUỐC TƯ NHÂN");
+		JLabel lblPhnMmQun = new JLabel("PHẦN MÊM QUẢN LÍ NHÀ THUỐC TƯ NHÂN");
 		lblPhnMmQun.setForeground(Color.ORANGE);
 		lblPhnMmQun.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblPhnMmQun.setBounds(60, 11, 378, 32);
@@ -65,7 +66,7 @@ public class HomeView extends JFrame {
 		btnXuatHang.setBounds(308, 98, 120, 55);
 		contentPane.add(btnXuatHang);
 		
-		btnNhanVien = new JButton("Nhân viên");
+		btnNhanVien = new JButton("Dược Sĩ");
 		btnNhanVien.setBackground(Color.WHITE);
 		btnNhanVien.setBounds(48, 184, 120, 55);
 		contentPane.add(btnNhanVien);
@@ -77,7 +78,7 @@ public class HomeView extends JFrame {
 		
 		btnThoat = new JButton("Thoát");
 		btnThoat.setBackground(Color.WHITE);
-		btnThoat.setBounds(308, 184, 120, 55);
+		btnThoat.setBounds(48, 267, 120, 55);
 		contentPane.add(btnThoat);
 		
 		btnKho = new JButton("Kho");
@@ -85,33 +86,42 @@ public class HomeView extends JFrame {
 		btnKho.setBounds(180, 98, 120, 55);
 		contentPane.add(btnKho);
 		
-		JLabel lblcopyright = new JLabel("@Copyright - 2018");
-		lblcopyright.setBounds(60, 323, 112, 14);
+		btnChat = new JButton("Chat hệ thống");
+		btnChat.setBackground(Color.WHITE);
+		btnChat.setBounds(308, 184, 120, 55);
+		contentPane.add(btnChat);
+		
+		JLabel lblcopyright = new JLabel("\u00a9 Copyright - 2018 by Huỳnh Nhật Hòa ft. Lê Thị Linh");
+		lblcopyright.setBounds(60, 380, 368, 20);
 		contentPane.add(lblcopyright);
 	}
 	
-	public void clickNhapHangListener(ActionListener listenForBtnNhapHang) {
-		btnNhapHang.addActionListener(listenForBtnNhapHang);
+	public void clickNhapHangListener(ActionListener listenForBtn) {
+		btnNhapHang.addActionListener(listenForBtn);
 	}
 	
-	public void clickXuatHangListener(ActionListener listenForBtnXuatHang) {
-		btnXuatHang.addActionListener(listenForBtnXuatHang);
+	public void clickXuatHangListener(ActionListener listenForBtn) {
+		btnXuatHang.addActionListener(listenForBtn);
 	}
 	
-	public void clickKhoListener(ActionListener listenForBtnKho) {
-		btnKho.addActionListener(listenForBtnKho);
+	public void clickKhoListener(ActionListener listenForBtn) {
+		btnKho.addActionListener(listenForBtn);
 	}
 	
-	public void clickNhanVienListener(ActionListener listenForBtnNhanVien) {
-		btnNhanVien.addActionListener(listenForBtnNhanVien);
+	public void clickNhanVienListener(ActionListener listenForBtn) {
+		btnNhanVien.addActionListener(listenForBtn);
 	}
 	
-	public void clickChiNhanhListener(ActionListener listenForBtnChiNhanh) {
-		btnChiNhanh.addActionListener(listenForBtnChiNhanh);
+	public void clickChiNhanhListener(ActionListener listenForBtn) {
+		btnChiNhanh.addActionListener(listenForBtn);
 	}
 	
-	public void clickThoatListener(ActionListener listenForBtnThoat) {
-		btnThoat.addActionListener(listenForBtnThoat);
+	public void clickThoatListener(ActionListener listenForBtn) {
+		btnThoat.addActionListener(listenForBtn);
+	}
+	
+	public void clickChatListener(ActionListener listenForBtn) {
+		btnChat.addActionListener(listenForBtn);
 	}
 
 }

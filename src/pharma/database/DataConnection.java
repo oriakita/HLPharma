@@ -3,7 +3,7 @@ package pharma.database;
 import java.sql.*;
 
 public class DataConnection {
-	private final String URL = "jdbc:mysql://localhost:3306/hlpharma";
+	private final String URL = "jdbc:mysql://localhost:3306/hlpharma?useUnicode=true&characterEncoding=UTF-8";
 	private final String USERNAME = "root";
 	private final String PASSWORD = "";
 	Connection conn = null;
@@ -37,10 +37,11 @@ public class DataConnection {
 	public void doQuery() {
 		try {
 			stmt = conn.createStatement();
-			rs = stmt.executeQuery(sql);
+			stmt.executeUpdate(sql);
+			stmt.close();
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out.println("Can not query");
+			System.out.println(e);
 		}
 	}
 

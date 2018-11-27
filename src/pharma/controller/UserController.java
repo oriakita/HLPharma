@@ -1,20 +1,46 @@
 package pharma.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
 
+import javax.swing.JOptionPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import javafx.collections.ListChangeListener;
 import pharma.model.*;
 import pharma.view.*;
 
 public class UserController {
-	private UserModel theUserModel;
+	private UserModel theUserModel = new UserModel();
 	private ViewLogin theLoginView;
 	private boolean resultLogin = false;
+	private DuocSiView theDuocSiView;
+	
+	public UserController() {
+		
+	}
 	
 	public UserController(UserModel theUserModel, ViewLogin theLoginView) {
 		this.theUserModel = theUserModel;
 		this.theLoginView = theLoginView;
 		this.theLoginView.clickLoginListener(new LoginListener());
 		this.theLoginView.enterToGo(new LoginListener());
+	}
+	
+	public void showWindowQuanLiDuocSi() {
+		this.theDuocSiView = new DuocSiView("Quản lí dược sĩ");
+		this.theDuocSiView.clickThemDuocSi(new ThemListener());
+		this.theDuocSiView.clickSuaDuocSi(new SuaListener());
+		this.theDuocSiView.clickXoaDuocSi(new XoaListener());
+		this.theDuocSiView.clickClear(new ClearListener());
+		//this.theDuocSiView.selectedRowTable(new SelectListener());
+		this.theDuocSiView.setLocationRelativeTo(null);
+		this.theDuocSiView.setVisible(true);
+	}
+	
+	public String[] setListChiNhanh() {
+		return theUserModel.showChiNhanh();
 	}
 	
 	class LoginListener implements ActionListener {
@@ -40,5 +66,94 @@ public class UserController {
 	
 	public boolean loginSuccess() {
 		return resultLogin;
+	}
+	
+	class ThemListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (theDuocSiView.getHoten().isEmpty() || theDuocSiView.getSDT().isEmpty() || theDuocSiView.getChucvu().isEmpty() || theDuocSiView.getGioitinh().isEmpty() || theDuocSiView.getNamsinh().isEmpty()) {
+				theDuocSiView.displayMessage("Vui lòng nhập đầy đủ thông tin");
+			} else {
+				try {
+					String tencn = theDuocSiView.getItemComboBox();
+					String hoten = theDuocSiView.getHoten();
+					int sdt = Integer.parseInt(theDuocSiView.getSDT());
+					String chucvu = theDuocSiView.getChucvu();
+					String gioitinh = theDuocSiView.getGioitinh();
+					String namsinh = theDuocSiView.getNamsinh();
+					if (gioitinh.equals("Nam") || gioitinh.equals("Nu")) {
+						theUserModel.themNhanVien(hoten, sdt, chucvu, gioitinh, namsinh, tencn);
+						theDuocSiView.addRowTableModel(theUserModel.showDuocSi());
+						theDuocSiView.displayMessage("Thêm dược sĩ thành công");
+					} else {
+						theDuocSiView.displayMessage("Giới tính chỉ nhập \"Nam\" hoặc \"Nu\"");
+					}
+				} catch (Exception e2) {
+					theDuocSiView.displayMessage("Nhập sai định dạng SDT, vui lòng nhập lại");
+				}
+			}
+			
+		}
+	}
+	
+	class SuaListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (theDuocSiView.getHoten().isEmpty() || theDuocSiView.getSDT().isEmpty() || theDuocSiView.getChucvu().isEmpty() || theDuocSiView.getGioitinh().isEmpty() || theDuocSiView.getNamsinh().isEmpty()) {
+				theDuocSiView.displayMessage("Vui lòng nhập đầy đủ thông tin");
+			} else {
+				try {
+					int uid = Integer.parseInt(theDuocSiView.getMaDuocSi());
+					String tencn = theDuocSiView.getItemComboBox();
+					String hoten = theDuocSiView.getHoten();
+					int sdt = Integer.parseInt(theDuocSiView.getSDT());
+					String chucvu = theDuocSiView.getChucvu();
+					String gioitinh = theDuocSiView.getGioitinh();
+					String namsinh = theDuocSiView.getNamsinh();
+					if (gioitinh.equals("Nam") || gioitinh.equals("Nu")) {
+						theUserModel.suaNhanVien(uid,hoten, sdt, chucvu, gioitinh, namsinh, tencn);
+						theDuocSiView.updateRowSelectedTable();
+						theDuocSiView.displayMessage("sửa dược sĩ thành công");
+					} else {
+						theDuocSiView.displayMessage("Giới tính chỉ nhập \"Nam\" hoặc \"Nu\"");
+					}
+				} catch (Exception e2) {
+					theDuocSiView.displayMessage("Nhập sai định dạng SDT, vui lòng nhập lại");
+				}
+			}
+		}
+	}
+	
+	class XoaListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			int ret = JOptionPane.showConfirmDialog(null, "Xác nhận xóa dược sĩ?", "Thoát", JOptionPane.YES_NO_OPTION);
+            if(ret==JOptionPane.YES_OPTION) {
+            	theUserModel.xoaNhanVien(Integer.parseInt(theDuocSiView.getMaDuocSi()));
+            	//theDuocSiView.removeRowSelectedTable();
+    			theDuocSiView.dispose();
+    			showWindowQuanLiDuocSi();
+            }
+		}
+	}
+	
+	class ClearListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			theDuocSiView.setAllClear();
+		}
+	}
+	
+//	class SelectListener implements ListSelectionListener {
+//
+//		@Override
+//		public void valueChanged(ListSelectionEvent e) {
+//			theDuocSiView.textHoten.setText(theDuocSiView.table.getValueAt(theDuocSiView.table.getSelectedRow(), 1).toString());
+//		}
+//		
+//	}
+	
+	public ResultSet setListDuocSi() {
+		return theUserModel.showDuocSi();
 	}
 }
