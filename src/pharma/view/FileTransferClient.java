@@ -2,24 +2,17 @@ package pharma.view;
 
 import java.io.*;
 import java.net.*;
-import java.util.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-public class FileTransferView extends Frame {
+public class FileTransferClient extends Frame {
 	public static String strHostAddress = "localhost";
-	public static int intPortNumber = 1235, intMaxClients = 4;
-	public static Vector vecConnectionSockets = null;
+	public static int intPortNumber = 4444, intMaxClients = 4;
 	public static String strFileName = "", strFilePath = "";
 	public static Socket clientSocket = null;
 	public static ObjectOutputStream outToServer = null;
 	public static ObjectInputStream inFromServer = null;
-
-	public static void main(String[] args) throws IOException {
-		FileTransferView objFileTransfer = new FileTransferView();
-	}
-
 	public Label lblSelectFile;
 	public Label lblTitle;
 	public Label lblStudentName;
@@ -29,7 +22,7 @@ public class FileTransferView extends Frame {
 	public Button btnSend;
 	public Button btnReset;
 
-	public FileTransferView() {
+	public FileTransferClient() {
 		setTitle("Chuong trinh truyen File phia Client");
 		setSize(400, 300);
 		setLayout(null);
@@ -65,7 +58,7 @@ public class FileTransferView extends Frame {
 		btnReset.addActionListener(new buttonListener());
 		add(btnReset);
 		btnReset.setBounds(170, 200, 50, 20);
-		show();
+		setVisible(true);
 
 		try {
 			clientSocket = new Socket(strHostAddress, intPortNumber);
@@ -111,7 +104,7 @@ public class FileTransferView extends Frame {
 
 	public static String showDialog() {
 		FileDialog fd = new FileDialog(new Frame(), "Select File...", FileDialog.LOAD);
-		fd.show();
+		fd.setVisible(true);
 		return fd.getDirectory() + fd.getFile();
 	}
 
@@ -144,64 +137,6 @@ public class FileTransferView extends Frame {
 			if (ae.getSource() == btnReset) {
 				tfFile.setText("");
 			}
-		}
-	}
-}
-
-class ThreadedConnectionSocket extends Thread {
-	public Socket connectionSocket;
-	public ObjectInputStream inFromClient;
-	public ObjectOutputStream outToClient;
-
-	public ThreadedConnectionSocket(Socket s) {
-		connectionSocket = s;
-		try {
-			outToClient = new ObjectOutputStream(connectionSocket.getOutputStream());
-			outToClient.flush();
-			inFromClient = new ObjectInputStream(connectionSocket.getInputStream());
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		start();
-	}
-
-	public void run() {
-		try {
-			int intFlag = 0;
-			String strFileName = "";
-			while (true) {
-				Object objRecieved = inFromClient.readObject();
-				switch (intFlag) {
-				case 0:
-					if (objRecieved.equals("IsFileTransfered")) {
-						intFlag++;
-					}
-					break;
-				case 1:
-					strFileName = (String) objRecieved;
-					int intOption = JOptionPane.showConfirmDialog(null,
-							connectionSocket.getInetAddress().getHostName() + " dang gui " + strFileName
-									+ "!\nBan co chac chan nhan khong?",
-							"Thong bao", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-					if (intOption == JOptionPane.YES_OPTION) {
-						intFlag++;
-					} else {
-						intFlag = 0;
-					}
-					break;
-				case 2:
-					byte[] arrByteOfReceivedFile = (byte[]) objRecieved;
-					FileOutputStream outToHardDisk = new FileOutputStream(strFileName);
-					outToHardDisk.write(arrByteOfReceivedFile);
-					intFlag = 0;
-					JOptionPane.showMessageDialog(null, "Ban da gui thanh cong file toi Server", "Xac nhan",
-							JOptionPane.INFORMATION_MESSAGE);
-					break;
-				}
-				Thread.yield();
-			}
-		} catch (Exception e) {
-			System.out.println(e);
 		}
 	}
 }

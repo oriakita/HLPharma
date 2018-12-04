@@ -7,8 +7,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 
-import truyenfile.view.FileTransferClient;
-
 public class RunTruyenFile extends JFrame {
 
 	public RunTruyenFile() {

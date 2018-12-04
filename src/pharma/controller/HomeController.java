@@ -6,7 +6,6 @@ import javax.swing.JOptionPane;
 
 import pharma.model.*;
 import pharma.view.*;
-import truyenfile.view.*;
 
 public class HomeController {
 	private HomeView theHomeView;
