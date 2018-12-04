@@ -74,7 +74,15 @@ public class ProductModel {
 	
 //	public static void main(String[] args) {
 //		ProductModel s = new ProductModel();
-//		s.themSanPham("Tên",150, 100,100,1);
+//		ResultSet test = s.showSanPham();
+//		try {
+//			while(test.next()) {
+//				System.out.println(test.getObject(2));
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 //	}
 
 }

@@ -6,12 +6,16 @@ import javax.swing.JOptionPane;
 
 import pharma.model.*;
 import pharma.view.*;
+import truyenfile.view.*;
 
 public class HomeController {
 	private HomeView theHomeView;
+	private String sessionName;
 	
-	public HomeController() {
+	public HomeController(String sessionName) {
+		this.sessionName = sessionName;
 		this.theHomeView = new HomeView("Home - Nhà Thuốc Hòa Linh");
+		this.theHomeView.setSesionName(sessionName);
 		this.theHomeView.setLocationRelativeTo(null);
 		this.theHomeView.clickNhapHangListener(new NhapHangListener());
 		this.theHomeView.clickXuatHangListener(new XuatHangListener());
@@ -20,6 +24,7 @@ public class HomeController {
 		this.theHomeView.clickChiNhanhListener(new ChiNhanhListener());
 		this.theHomeView.clickThoatListener(new ThoatListener());
 		this.theHomeView.clickChatListener(new ChatListener());
+		this.theHomeView.clickFileTransferListener(new FileTransferListener());
 		this.theHomeView.setVisible(true);
 	}
 	
@@ -57,8 +62,8 @@ public class HomeController {
 	class ChiNhanhListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			ChiNhanhController theChiNhanhController = new ChiNhanhController();
+			theChiNhanhController.showWindowQuanLiChiNhanh();
 		}
 	}
 	
@@ -74,8 +79,18 @@ public class HomeController {
 	class ChatListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			ChatView theChatView = new ChatView();
+			theChatView.setUsername(sessionName);
+			theChatView.setLocationRelativeTo(null);
+			theChatView.setVisible(true);
 		}
 	}
+	
+	class FileTransferListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			new Thread(() -> new FileTransferClient()).start();
+		}
+	}
+	
 }

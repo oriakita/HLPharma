@@ -6,8 +6,12 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import truyenfile.view.*;
+
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -18,8 +22,10 @@ import javax.swing.JButton;
 public class HomeView extends JFrame {
 
 	private JPanel contentPane;
-	private JButton btnNhapHang, btnXuatHang, btnKho, btnNhanVien, btnChiNhanh, btnThoat;
+	private JButton btnNhapHang, btnXuatHang, btnKho, btnNhanVien, btnChiNhanh, btnThoat, btnFileTransfer;
 	private JButton btnChat;
+	private JLabel lbSessionName;
+	private JButton btnDangXuat;
 
 	/**
 	 * Launch the application.
@@ -78,7 +84,7 @@ public class HomeView extends JFrame {
 		
 		btnThoat = new JButton("Thoát");
 		btnThoat.setBackground(Color.WHITE);
-		btnThoat.setBounds(48, 267, 120, 55);
+		btnThoat.setBounds(180, 265, 120, 55);
 		contentPane.add(btnThoat);
 		
 		btnKho = new JButton("Kho");
@@ -94,6 +100,21 @@ public class HomeView extends JFrame {
 		JLabel lblcopyright = new JLabel("\u00a9 Copyright - 2018 by Huỳnh Nhật Hòa ft. Lê Thị Linh");
 		lblcopyright.setBounds(60, 380, 368, 20);
 		contentPane.add(lblcopyright);
+		
+		lbSessionName = new JLabel("New label");
+		lbSessionName.setForeground(Color.BLUE);
+		lbSessionName.setBounds(48, 54, 250, 14);
+		contentPane.add(lbSessionName);
+		
+		btnFileTransfer = new JButton("Truyền File");
+		btnFileTransfer.setBackground(Color.WHITE);
+		btnFileTransfer.setBounds(48, 265, 120, 55);
+		contentPane.add(btnFileTransfer);
+		
+//		btnDangXuat = new JButton("Đăng xuất");
+//		btnDangXuat.setBackground(Color.WHITE);
+//		btnDangXuat.setBounds(180, 266, 120, 55);
+//		contentPane.add(btnDangXuat);
 	}
 	
 	public void clickNhapHangListener(ActionListener listenForBtn) {
@@ -123,5 +144,12 @@ public class HomeView extends JFrame {
 	public void clickChatListener(ActionListener listenForBtn) {
 		btnChat.addActionListener(listenForBtn);
 	}
-
+	
+	public void clickFileTransferListener(ActionListener listenForBtn) {
+		btnFileTransfer.addActionListener(listenForBtn);
+	}
+	
+	public void setSesionName(String ses) {
+		lbSessionName.setText("Xin chào, " + ses);
+	}
 }

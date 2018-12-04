@@ -1,6 +1,10 @@
 package pharma.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
 import java.sql.ResultSet;
 
 import javax.swing.JOptionPane;
@@ -9,6 +13,7 @@ import javax.swing.event.ListSelectionListener;
 
 import javafx.collections.ListChangeListener;
 import pharma.model.*;
+import pharma.mvc.InterfaceRMI;
 import pharma.view.*;
 
 public class UserController {
@@ -16,12 +21,23 @@ public class UserController {
 	private ViewLogin theLoginView;
 	private boolean resultLogin = false;
 	private DuocSiView theDuocSiView;
+	InterfaceRMI objLogin;
 	
 	public UserController() {
 		
 	}
 	
 	public UserController(UserModel theUserModel, ViewLogin theLoginView) {
+		try {
+			LocateRegistry.createRegistry(1099);
+			LocateRegistry.getRegistry();
+			LoginModel loginModel = new LoginModel();
+			Naming.rebind("Login", loginModel);
+			System.out.println("RMI server is now started...");
+		} catch (RemoteException | MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.theUserModel = theUserModel;
 		this.theLoginView = theLoginView;
 		this.theLoginView.clickLoginListener(new LoginListener());
@@ -53,12 +69,21 @@ public class UserController {
 			if (username.isEmpty() || password.isEmpty() ) {
 				theLoginView.displayErrorMessage("Tài khoản và mật khẩu không được để trống!");
 			} else {
-				theUserModel.checkLogin(username, password);
-				if (theUserModel.getLoginResult() == true) {
-					HomeController theHomeController = new HomeController();
-					theLoginView.dispose();
-				} else {
-					theLoginView.displayErrorMessage("Sai tài khoản hoặc mật khẩu");
+				try
+				{
+						//bind object to RMI registry with ATMmachine as name
+					objLogin =(InterfaceRMI)Naming.lookup("Login");
+					objLogin.checkLogin(username, password);
+					if (objLogin.getLoginResult() == true) {
+						HomeController theHomeController = new HomeController(sessionName());
+						theLoginView.dispose();
+					} else {
+						theLoginView.displayErrorMessage("Sai tài khoản hoặc mật khẩu");
+					}
+				}
+				catch(Exception ee)
+				{
+					System.out.println("Server Error : "+ee.getMessage());
 				}
 			}
 		}
@@ -155,5 +180,9 @@ public class UserController {
 	
 	public ResultSet setListDuocSi() {
 		return theUserModel.showDuocSi();
+	}
+	
+	public String sessionName() {
+		return theLoginView.getUsername();
 	}
 }

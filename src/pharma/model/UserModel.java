@@ -7,23 +7,6 @@ import pharma.database.DataConnection;
 
 public class UserModel {
 	
-	private boolean result = false;
-	
-	public void checkLogin(String username, String password) {
-		DataConnection query = new DataConnection();
-		String sql = "select * from user where username = '" + username + "' and password = '" + password + "' ";
-		query.setQuery(sql);
-		if(query.countRow() > 0) {
-			result = true;
-		} else {
-			result = false;
-		}
-	}
-	
-	public boolean getLoginResult() {
-		return result;
-	}
-	
 	public String[] showChiNhanh() {
 		try {
 			DataConnection query = new DataConnection();
@@ -77,6 +60,14 @@ public class UserModel {
 	
 //	public static void main(String[] args) {
 //		UserModel c = new UserModel();
-//		c.suaNhanVien(2, "Nguyễn Văn B", 909444555, "Dược Sĩ", "Nam", "1999-11-11", "Hiệu thuốc số 2");
+//		ResultSet test = c.showDuocSi();
+//		try {
+//			while(test.next()) {
+//				System.out.println(test.getObject(2));
+//			}
+//		} catch (SQLException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 //	}
 }

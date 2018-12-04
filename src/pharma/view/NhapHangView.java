@@ -62,18 +62,17 @@ public class NhapHangView extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					NhapHangView frame = new NhapHangView("home");
-//					frame.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
+	public static void main(String[] args) {
+		ResultSet test = new ProductController().setListSanPham();
+		try {
+			while(test.next()) {
+				System.out.println(test.getObject(2));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Create the frame.
@@ -86,7 +85,7 @@ public class NhapHangView extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setForeground(Color.WHITE);
 		menuBar.setBackground(Color.ORANGE);
-		setJMenuBar(menuBar);
+		//setJMenuBar(menuBar);
 
 		JMenu mnFile = new JMenu("File");
 		//mnFile.setForeground(Color.WHITE);
