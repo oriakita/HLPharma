@@ -32,21 +32,36 @@ public class ChiNhanhModel {
 		String sql = "SELECT * FROM chinhanh WHERE tenchinhanh = '" + tenchinhanh + "'";
 		query.setQuery(sql);
 		ResultSet rs = query.getAllRow();
-		try {
-			rs.last();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		return rs;
 	}
 	
+	public void themChiNhanh(String tenchinhanh, String diachi, int sdt) {
+		DataConnection query = new DataConnection();
+		String sql = "INSERT INTO chinhanh(tenchinhanh, diachi, sdt) VALUES ('" + tenchinhanh + "', '" + diachi + "', " + sdt + ")";
+		query.setQuery(sql);
+		query.doQuery();
+	}
+	
+	public void suaChiNhanh(String tencn, String newtencn, String diachi, int sdt) {
+		DataConnection query = new DataConnection();
+		String sql = "UPDATE chinhanh SET tenchinhanh = '" + newtencn + "' , diachi = '" + diachi + "', sdt = " + sdt + " WHERE tenchinhanh = '" + tencn + "' ";
+		query.setQuery(sql);
+		query.doQuery();
+	}
+	
+	public void xoaChiNhanh(String tencn) {
+		DataConnection query = new DataConnection();
+		String sql = "DELETE FROM chinhanh WHERE tenchinhanh = '" + tencn + "' ";
+		query.setQuery(sql);
+		query.doQuery();
+	}
 //	public static void main(String[] args) {
 //		ChiNhanhModel cm = new ChiNhanhModel();
 //		ResultSet rs = cm.showChiNhanhSelected("Hiệu thuốc số 1");
+//		System.out.println("hello");
 //		try {
 //			while(rs.next()) {
-//				System.out.println(rs.getInt("macn") + rs.getString("tenchinhanh")+rs.getString("diachi")+rs.getInt("sdt"));
+//				System.out.println(rs.getString("macn") + rs.getString("tenchinhanh")+rs.getString("diachi")+rs.getInt("sdt"));
 //			}
 //		} catch (Exception e) {
 //			// TODO: handle exception

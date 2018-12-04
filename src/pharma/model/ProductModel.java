@@ -72,6 +72,36 @@ public class ProductModel {
 		return rs;
 	}
 	
+	public ResultSet showSanPhamKho() {
+		DataConnection query = new DataConnection();
+		String sql = "SELECT masp, tensp, giaban, giavon, (slnhap - slban) AS tonkho, n.tenncc FROM product AS p, nhacungcap AS n WHERE p.mancc = n.mancc";
+		query.setQuery(sql);
+		ResultSet rs = query.getAllRow();
+		return rs;
+	}
+	
+	public ResultSet showSanPhamSelected(int masp) {
+		DataConnection query = new DataConnection();
+		String sql = "SELECT * FROM product WHERE masp = '" + masp + "'";
+		query.setQuery(sql);
+		ResultSet rs = query.getAllRow();
+		return rs;
+	}
+	
+	public void suaSanPham(int masp, String tensp, int giaban, int giavon) {
+		DataConnection query = new DataConnection();
+		String sql = "UPDATE product SET tensp = '" + tensp + "', giaban = '" + giaban + "', giavon = '" + giavon + "' WHERE masp = '" + masp + "' ";
+		query.setQuery(sql);
+		query.doQuery();
+	}
+	
+	public void xoaSanPham(int masp) {
+		DataConnection query = new DataConnection();
+		String sql = "DELETE FROM product WHERE masp = '" + masp + "' ";
+		query.setQuery(sql);
+		query.doQuery();
+	}
+	
 //	public static void main(String[] args) {
 //		ProductModel s = new ProductModel();
 //		ResultSet test = s.showSanPham();

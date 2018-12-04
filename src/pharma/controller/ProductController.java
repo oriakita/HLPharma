@@ -14,6 +14,7 @@ import pharma.model.*;
 public class ProductController {
 	private ProductModel theProductModel = new ProductModel();
 	private NhapHangView theNhapHangView;
+	private KhoView theKhoView;
 	
 	public void showWindow() {
 		this.theNhapHangView = new NhapHangView("Quản lí nhập thuốc");
@@ -26,12 +27,24 @@ public class ProductController {
 		this.theNhapHangView.setVisible(true);
 	}
 	
+	public void showKhoView() {
+		this.theKhoView = new KhoView("Quản lí kho thuốc");
+		this.theKhoView.clickSua(new SuaSpListener());
+		this.theKhoView.clickxoa(new XoaSpListener());
+		this.theKhoView.setLocationRelativeTo(null);
+		this.theKhoView.setVisible(true);
+	}
+	
 	public String[] setListNCCs() {
 		return this.theProductModel.showNhaCungCap();
 	}
 	
 	public ResultSet setListSanPham() {
 		return this.theProductModel.showSanPham();
+	}
+	
+	public ResultSet setListSanPhamKho() {
+		return this.theProductModel.showSanPhamKho();
 	}
 	
 	class ThemNccListener implements ActionListener {
@@ -85,6 +98,40 @@ public class ProductController {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			theNhapHangView.setAllClear();
+		}
+	}
+	
+	class SuaSpListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (theKhoView.getTensp().isEmpty() || theKhoView.getGiaban().isEmpty() || theKhoView.getGiavon().isEmpty()) {
+				theKhoView.displayMessage("Thiếu dữ liệu cần thiết");
+			} else {
+				try {
+					int masp = Integer.parseInt(theKhoView.getMaSpSelected());
+					String tensp = theKhoView.getTensp();
+					int giaban = Integer.parseInt(theKhoView.getGiaban());
+					int giavon = Integer.parseInt(theKhoView.getGiavon());
+					theProductModel.suaSanPham(masp, tensp, giaban, giavon);
+				} catch (Exception e2) {
+					theKhoView.displayMessage("Sai định dạng dữ liệu");
+				}
+				theKhoView.updateRowTable();
+				theKhoView.displayMessage("Cập nhật thành công");
+			}
+		}
+	}
+	
+	class XoaSpListener implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			String tensp = theKhoView.getTensp();
+			int ret = JOptionPane.showConfirmDialog(null, "Xóa sản phẩm \"" + tensp + "\"?", "Xóa", JOptionPane.YES_NO_OPTION);
+            if(ret==JOptionPane.YES_OPTION) {
+				theProductModel.xoaSanPham(Integer.parseInt(theKhoView.getMaSpSelected()));
+				theKhoView.removeRowTable();
+				theKhoView.displayMessage("Xóa sản phẩm thành công");
+            }
 		}
 	}
 	

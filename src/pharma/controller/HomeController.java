@@ -39,15 +39,16 @@ public class HomeController {
 	class XuatHangListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+			HoadonController theHdController = new HoadonController();
+			theHdController.showXuatKhoView();
 		}
 	}
 	
 	class KhoListener implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-			
+			ProductController theProducController = new ProductController();
+			theProducController.showKhoView();
 		}
 	}
 	

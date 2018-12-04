@@ -82,53 +82,6 @@ public class NhapHangView extends JFrame {
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 1024, 600);
 
-		JMenuBar menuBar = new JMenuBar();
-		menuBar.setForeground(Color.WHITE);
-		menuBar.setBackground(Color.ORANGE);
-		//setJMenuBar(menuBar);
-
-		JMenu mnFile = new JMenu("File");
-		//mnFile.setForeground(Color.WHITE);
-		menuBar.add(mnFile);
-
-		JMenuItem mntmExit = new JMenuItem("exit");
-		mnFile.add(mntmExit);
-
-		JMenu mnKho = new JMenu("Kho");
-		menuBar.add(mnKho);
-
-		JMenuItem mntmQunLKho = new JMenuItem("Quản lí kho");
-		mnKho.add(mntmQunLKho);
-
-		JMenu mnGiaoDch = new JMenu("Giao dịch");
-		menuBar.add(mnGiaoDch);
-
-		JMenuItem mntmQunLNhp = new JMenuItem("Quản lí nhập hàng");
-		mnGiaoDch.add(mntmQunLNhp);
-
-		JMenuItem mntmQunLXut = new JMenuItem("Quản lí xuất hàng");
-		mnGiaoDch.add(mntmQunLXut);
-
-		JMenuItem mntmHan = new JMenuItem("Hóa đơn");
-		mnGiaoDch.add(mntmHan);
-
-		JMenu mnNhnVin = new JMenu("Nhân viên");
-		menuBar.add(mnNhnVin);
-
-		JMenuItem mntmQunLDc = new JMenuItem("Quản lí dược sĩ");
-		mnNhnVin.add(mntmQunLDc);
-
-		JMenu mnChiNhnh = new JMenu("Chi nhánh");
-		menuBar.add(mnChiNhnh);
-
-		JMenuItem mntmQunL = new JMenuItem("Quản lí");
-		mnChiNhnh.add(mntmQunL);
-
-		JMenu mnHelp = new JMenu("Help");
-		menuBar.add(mnHelp);
-
-		JMenuItem mntmAboutHlPharma = new JMenuItem("About HL Pharma");
-		mnHelp.add(mntmAboutHlPharma);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(250, 250, 250));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

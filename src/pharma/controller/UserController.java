@@ -33,7 +33,7 @@ public class UserController {
 			LocateRegistry.getRegistry();
 			LoginModel loginModel = new LoginModel();
 			Naming.rebind("Login", loginModel);
-			System.out.println("RMI server is now started...");
+			System.out.println("RMI server đã khởi động...");
 		} catch (RemoteException | MalformedURLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

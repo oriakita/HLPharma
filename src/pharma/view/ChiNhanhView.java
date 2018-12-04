@@ -19,6 +19,7 @@ import pharma.controller.*;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.DefaultListModel;
@@ -85,7 +86,7 @@ public class ChiNhanhView extends JFrame {
 			public void valueChanged(ListSelectionEvent arg0) {
 				if (list.getSelectedIndex() != -1) {
 					strSelected = list.getModel().getElementAt(list.getSelectedIndex());
-					new ChiNhanhController().setValueTextField(strSelected);
+					setAllText(new ChiNhanhController().setValueTextField(strSelected));
 				} else {
 					strSelected = "";
 				}
@@ -213,10 +214,18 @@ public class ChiNhanhView extends JFrame {
 	public void setAllText(ResultSet rs) {
 		try {
 			while(rs.next()) {
+				textMacn.setText(rs.getString("macn"));
+				textTencn.setText(rs.getString("tenchinhanh"));
+				textDiachi.setText(rs.getString("diachi"));
+				textSdt.setText(rs.getString("sdt"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void displayErrorMessage(String errorMessage) {
+		JOptionPane.showMessageDialog(this, errorMessage);
 	}
 }
